@@ -1,3 +1,24 @@
 {
-  "itemGroup.stagelite": "StageLite"
+  "itemGroup.stagelite": "StageLite",
+  "block.stagelite.foco": "Foco",
+  "container.stagelite.foco": "Foco",
+
+  "gui.stagelite.save": "Guardar",
+  "gui.stagelite.cancel": "Cancelar",
+
+  "gui.stagelite.foco.intensity": "Intensidad: %s%%",
+  "gui.stagelite.foco.intensity.tooltip": "Lo brillante que se ve el foco cuando tiene corriente.",
+  "gui.stagelite.foco.group": "Grupo",
+  "gui.stagelite.foco.group.tooltip": "Ponle un nombre (por ejemplo 'Escenario') para que una futura consola pueda controlarlo junto a otros del mismo grupo.",
+
+  "gui.stagelite.foco.color.white": "Blanco",
+  "gui.stagelite.foco.color.warm": "Blanco calido",
+  "gui.stagelite.foco.color.red": "Rojo",
+  "gui.stagelite.foco.color.orange": "Naranja",
+  "gui.stagelite.foco.color.yellow": "Amarillo",
+  "gui.stagelite.foco.color.green": "Verde",
+  "gui.stagelite.foco.color.cyan": "Cian",
+  "gui.stagelite.foco.color.blue": "Azul",
+  "gui.stagelite.foco.color.purple": "Morado",
+  "gui.stagelite.foco.color.pink": "Rosa"
 }

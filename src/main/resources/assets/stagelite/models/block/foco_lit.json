@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "particle": "stagelite:block/foco_side",
+    "top": "stagelite:block/foco_top",
+    "front": "stagelite:block/foco_front_lit",
+    "side": "stagelite:block/foco_side"
+  }
+}

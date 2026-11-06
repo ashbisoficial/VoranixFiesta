@@ -1,0 +1,62 @@
+package com.ashbisoficial.stagelite.network.packet;
+
+import com.ashbisoficial.stagelite.blockentity.FocoBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.network.NetworkEvent;
+
+import java.util.function.Supplier;
+
+/**
+ * Enviado por el cliente cuando el jugador pulsa "Guardar" en la pantalla del foco.
+ * El servidor valida distancia y tipo de bloque antes de aplicar nada.
+ */
+public class SetFocoConfigPacket {
+
+    private static final double MAX_DISTANCE_SQ = 8.0 * 8.0;
+    private static final int MAX_GROUP_LENGTH = 32;
+
+    private final BlockPos pos;
+    private final int color;
+    private final int intensity;
+    private final String group;
+
+    public SetFocoConfigPacket(BlockPos pos, int color, int intensity, String group) {
+        this.pos = pos;
+        this.color = color;
+        this.intensity = intensity;
+        this.group = group;
+    }
+
+    public static void encode(SetFocoConfigPacket packet, FriendlyByteBuf buf) {
+        buf.writeBlockPos(packet.pos);
+        buf.writeInt(packet.color);
+        buf.writeInt(packet.intensity);
+        buf.writeUtf(packet.group, MAX_GROUP_LENGTH);
+    }
+
+    public static SetFocoConfigPacket decode(FriendlyByteBuf buf) {
+        return new SetFocoConfigPacket(buf.readBlockPos(), buf.readInt(), buf.readInt(), buf.readUtf(MAX_GROUP_LENGTH));
+    }
+
+    public static void handle(SetFocoConfigPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
+        context.enqueueWork(() -> {
+            var player = context.getSender();
+            if (player == null) {
+                return;
+            }
+            Level level = player.level();
+            if (!level.isLoaded(packet.pos) || player.distanceToSqr(packet.pos.getX() + 0.5, packet.pos.getY() + 0.5, packet.pos.getZ() + 0.5) > MAX_DISTANCE_SQ) {
+                return;
+            }
+            BlockEntity blockEntity = level.getBlockEntity(packet.pos);
+            if (blockEntity instanceof FocoBlockEntity foco) {
+                foco.applyConfigFromClient(packet.color, packet.intensity, packet.group);
+            }
+        });
+        context.setPacketHandled(true);
+    }
+}

@@ -1,3 +1,24 @@
 {
-  "itemGroup.stagelite": "StageLite"
+  "itemGroup.stagelite": "StageLite",
+  "block.stagelite.foco": "Spotlight",
+  "container.stagelite.foco": "Spotlight",
+
+  "gui.stagelite.save": "Save",
+  "gui.stagelite.cancel": "Cancel",
+
+  "gui.stagelite.foco.intensity": "Intensity: %s%%",
+  "gui.stagelite.foco.intensity.tooltip": "How bright the spotlight looks once it has power.",
+  "gui.stagelite.foco.group": "Group",
+  "gui.stagelite.foco.group.tooltip": "Give it a name (e.g. 'Stage') so a future console can control it along with others in the same group.",
+
+  "gui.stagelite.foco.color.white": "White",
+  "gui.stagelite.foco.color.warm": "Warm white",
+  "gui.stagelite.foco.color.red": "Red",
+  "gui.stagelite.foco.color.orange": "Orange",
+  "gui.stagelite.foco.color.yellow": "Yellow",
+  "gui.stagelite.foco.color.green": "Green",
+  "gui.stagelite.foco.color.cyan": "Cyan",
+  "gui.stagelite.foco.color.blue": "Blue",
+  "gui.stagelite.foco.color.purple": "Purple",
+  "gui.stagelite.foco.color.pink": "Pink"
 }
