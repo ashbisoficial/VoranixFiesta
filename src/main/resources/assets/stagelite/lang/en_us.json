@@ -4,13 +4,27 @@
   "container.stagelite.foco": "Spotlight",
   "block.stagelite.consola": "Light console",
   "container.stagelite.consola": "Light console",
+  "block.stagelite.panel": "LED panel",
+  "container.stagelite.panel": "LED panel",
+  "block.stagelite.estrobo": "Strobe light",
+  "container.stagelite.estrobo": "Strobe light",
+  "block.stagelite.cabeza_movil": "Moving head",
+  "container.stagelite.cabeza_movil": "Moving head",
+  "block.stagelite.truss": "Truss",
 
   "gui.stagelite.save": "Save",
   "gui.stagelite.cancel": "Cancel",
 
+  "gui.stagelite.cabeza_movil.pattern.fijo": "Fixed",
+  "gui.stagelite.cabeza_movil.pattern.barrido": "Sweep",
+  "gui.stagelite.cabeza_movil.pattern.circulo": "Circle",
+  "gui.stagelite.cabeza_movil.pattern.tooltip": "How the beam moves: fixed (doesn't move), sweep (side to side) or circle.",
+
   "gui.stagelite.effect.fijo": "Static",
   "gui.stagelite.effect.parpadeo": "Blink",
   "gui.stagelite.effect.respiracion": "Breathe",
+  "gui.stagelite.effect.arcoiris": "Rainbow",
+  "gui.stagelite.effect.persecucion": "Chase",
 
   "gui.stagelite.consola.group.tooltip": "Apply the changes to every spotlight in this group.",
   "gui.stagelite.consola.apply": "Apply to group",
@@ -20,6 +34,8 @@
   "gui.stagelite.consola.strobe": "Strobe all",
   "gui.stagelite.consola.strobe.tooltip": "Sets blink on every known spotlight, keeping its current color and intensity.",
   "gui.stagelite.consola.no_groups": "No groups yet: give a spotlight a group name from its own screen.",
+  "gui.stagelite.consola.speed": "Speed: %sx",
+  "gui.stagelite.consola.speed.tooltip": "The BPM/speed for Blink, Breathe, Rainbow and Chase.",
 
   "gui.stagelite.foco.intensity": "Intensity: %s%%",
   "gui.stagelite.foco.intensity.tooltip": "How bright the spotlight looks once it has power.",

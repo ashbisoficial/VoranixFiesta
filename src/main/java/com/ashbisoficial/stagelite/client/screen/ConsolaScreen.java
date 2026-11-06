@@ -30,17 +30,20 @@ public class ConsolaScreen extends AbstractContainerScreen<ConsolaMenu> {
     private static final String[] PALETTE_KEYS = {
             "white", "warm", "red", "orange", "yellow", "green", "cyan", "blue", "purple", "pink"
     };
-    private static final String[] EFFECTS = {Effects.FIJO, Effects.PARPADEO, Effects.RESPIRACION};
+    private static final String[] EFFECTS = {
+            Effects.FIJO, Effects.PARPADEO, Effects.RESPIRACION, Effects.ARCOIRIS, Effects.PERSECUCION
+    };
 
     private String selectedGroup;
     private int selectedColor = LightState.DEFAULT_COLOR;
     private int selectedIntensity = LightState.DEFAULT_INTENSITY;
     private String selectedEffect = Effects.FIJO;
+    private float selectedSpeed = 1.0f;
 
     public ConsolaScreen(ConsolaMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         this.imageWidth = 236;
-        this.imageHeight = 220;
+        this.imageHeight = 260;
         List<String> groups = menu.getGroupNames();
         this.selectedGroup = groups.isEmpty() ? null : groups.get(0);
     }
@@ -87,14 +90,20 @@ public class ConsolaScreen extends AbstractContainerScreen<ConsolaMenu> {
         int effectWidth = (imageWidth - 16 - 8) / 3;
         for (int i = 0; i < EFFECTS.length; i++) {
             String effect = EFFECTS[i];
-            int x = left + 8 + i * (effectWidth + 4);
+            int x = left + 8 + (i % 3) * (effectWidth + 4);
+            int y = effectsY + (i / 3) * 20;
             Button effectButton = Button.builder(Component.translatable("gui.stagelite.effect." + effect), btn -> selectedEffect = effect)
-                    .bounds(x, effectsY, effectWidth, 18)
+                    .bounds(x, y, effectWidth, 18)
                     .build();
             addRenderableWidget(effectButton);
         }
+        int effectRows = (EFFECTS.length + 2) / 3;
 
-        int applyY = effectsY + 26;
+        SpeedSlider speedSlider = new SpeedSlider(left + 8, effectsY + effectRows * 20 + 6, imageWidth - 16, 20, selectedSpeed);
+        speedSlider.setTooltip(Tooltip.create(Component.translatable("gui.stagelite.consola.speed.tooltip")));
+        addRenderableWidget(speedSlider);
+
+        int applyY = effectsY + effectRows * 20 + 32;
         Button apply = Button.builder(Component.translatable("gui.stagelite.consola.apply"), btn -> applyToGroup())
                 .bounds(left + 8, applyY, imageWidth - 16, 20)
                 .tooltip(Tooltip.create(Component.translatable("gui.stagelite.consola.apply.tooltip")))
@@ -119,7 +128,7 @@ public class ConsolaScreen extends AbstractContainerScreen<ConsolaMenu> {
         if (selectedGroup == null) {
             return;
         }
-        StageLiteNetwork.CHANNEL.sendToServer(new ApplyGroupLookPacket(selectedGroup, selectedColor, selectedIntensity, selectedEffect, 1.0f));
+        StageLiteNetwork.CHANNEL.sendToServer(new ApplyGroupLookPacket(selectedGroup, selectedColor, selectedIntensity, selectedEffect, selectedSpeed));
     }
 
     private void sendBlackout() {
@@ -174,6 +183,29 @@ public class ConsolaScreen extends AbstractContainerScreen<ConsolaMenu> {
         @Override
         protected void applyValue() {
             selectedIntensity = (int) Math.round(value * 100);
+        }
+    }
+
+    /** Velocidad/BPM del efecto: 0.2x (lento) a 3.0x (rapido), 1.0x por defecto. */
+    private class SpeedSlider extends AbstractSliderButton {
+
+        SpeedSlider(int x, int y, int width, int height, float initialSpeed) {
+            super(x, y, width, height, Component.empty(), (initialSpeed - 0.2) / 2.8);
+            updateMessage();
+        }
+
+        @Override
+        protected void updateMessage() {
+            setMessage(Component.translatable("gui.stagelite.consola.speed", String.format("%.1f", speedValue())));
+        }
+
+        @Override
+        protected void applyValue() {
+            selectedSpeed = speedValue();
+        }
+
+        private float speedValue() {
+            return (float) (0.2 + value * 2.8);
         }
     }
 }

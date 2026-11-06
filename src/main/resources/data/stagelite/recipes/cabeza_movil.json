@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "IDI",
+    "IRI"
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "D": { "item": "minecraft:glowstone_dust" },
+    "R": { "item": "minecraft:repeater" }
+  },
+  "result": {
+    "item": "stagelite:cabeza_movil",
+    "count": 1
+  }
+}

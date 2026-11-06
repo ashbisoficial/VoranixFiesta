@@ -4,13 +4,27 @@
   "container.stagelite.foco": "Foco",
   "block.stagelite.consola": "Consola de luces",
   "container.stagelite.consola": "Consola de luces",
+  "block.stagelite.panel": "Panel LED",
+  "container.stagelite.panel": "Panel LED",
+  "block.stagelite.estrobo": "Estroboscopio",
+  "container.stagelite.estrobo": "Estroboscopio",
+  "block.stagelite.cabeza_movil": "Cabeza movil",
+  "container.stagelite.cabeza_movil": "Cabeza movil",
+  "block.stagelite.truss": "Truss",
 
   "gui.stagelite.save": "Guardar",
   "gui.stagelite.cancel": "Cancelar",
 
+  "gui.stagelite.cabeza_movil.pattern.fijo": "Fijo",
+  "gui.stagelite.cabeza_movil.pattern.barrido": "Barrido",
+  "gui.stagelite.cabeza_movil.pattern.circulo": "Circulo",
+  "gui.stagelite.cabeza_movil.pattern.tooltip": "Como se mueve el haz: fijo (no se mueve), barrido (va de lado a lado) o circulo.",
+
   "gui.stagelite.effect.fijo": "Fijo",
   "gui.stagelite.effect.parpadeo": "Parpadeo",
   "gui.stagelite.effect.respiracion": "Respiracion",
+  "gui.stagelite.effect.arcoiris": "Arcoiris",
+  "gui.stagelite.effect.persecucion": "Persecucion",
 
   "gui.stagelite.consola.group.tooltip": "Aplica los cambios a todos los focos de este grupo.",
   "gui.stagelite.consola.apply": "Aplicar a grupo",
@@ -20,6 +34,8 @@
   "gui.stagelite.consola.strobe": "Estrobo general",
   "gui.stagelite.consola.strobe.tooltip": "Pone parpadeo en todos los focos conocidos, con su color e intensidad actuales.",
   "gui.stagelite.consola.no_groups": "Todavia no hay grupos: ponle un nombre de grupo a un foco desde su pantalla.",
+  "gui.stagelite.consola.speed": "Velocidad: %sx",
+  "gui.stagelite.consola.speed.tooltip": "El BPM/velocidad de Parpadeo, Respiracion, Arcoiris y Persecucion.",
 
   "gui.stagelite.foco.intensity": "Intensidad: %s%%",
   "gui.stagelite.foco.intensity.tooltip": "Lo brillante que se ve el foco cuando tiene corriente.",

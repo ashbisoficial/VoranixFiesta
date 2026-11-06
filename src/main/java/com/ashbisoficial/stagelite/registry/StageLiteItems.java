@@ -20,4 +20,24 @@ public class StageLiteItems {
             "consola",
             () -> new BlockItem(StageLiteBlocks.CONSOLA.get(), new Item.Properties())
     );
+
+    public static final RegistryObject<Item> PANEL = ITEMS.register(
+            "panel",
+            () -> new BlockItem(StageLiteBlocks.PANEL.get(), new Item.Properties())
+    );
+
+    public static final RegistryObject<Item> ESTROBO = ITEMS.register(
+            "estrobo",
+            () -> new BlockItem(StageLiteBlocks.ESTROBO.get(), new Item.Properties())
+    );
+
+    public static final RegistryObject<Item> CABEZA_MOVIL = ITEMS.register(
+            "cabeza_movil",
+            () -> new BlockItem(StageLiteBlocks.CABEZA_MOVIL.get(), new Item.Properties())
+    );
+
+    public static final RegistryObject<Item> TRUSS = ITEMS.register(
+            "truss",
+            () -> new BlockItem(StageLiteBlocks.TRUSS.get(), new Item.Properties())
+    );
 }

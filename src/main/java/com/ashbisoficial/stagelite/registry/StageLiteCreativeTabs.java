@@ -20,6 +20,10 @@ public class StageLiteCreativeTabs {
                     .icon(() -> new ItemStack(StageLiteItems.FOCO.get()))
                     .displayItems((parameters, output) -> {
                         output.accept(StageLiteItems.FOCO.get());
+                        output.accept(StageLiteItems.PANEL.get());
+                        output.accept(StageLiteItems.ESTROBO.get());
+                        output.accept(StageLiteItems.CABEZA_MOVIL.get());
+                        output.accept(StageLiteItems.TRUSS.get());
                         output.accept(StageLiteItems.CONSOLA.get());
                     })
                     .build()

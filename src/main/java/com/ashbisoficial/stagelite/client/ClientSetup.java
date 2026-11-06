@@ -2,8 +2,11 @@ package com.ashbisoficial.stagelite.client;
 
 import com.ashbisoficial.stagelite.StageLite;
 import com.ashbisoficial.stagelite.client.render.FocoBlockEntityRenderer;
+import com.ashbisoficial.stagelite.client.render.MovingHeadBlockEntityRenderer;
+import com.ashbisoficial.stagelite.client.render.WashBlockEntityRenderer;
 import com.ashbisoficial.stagelite.client.screen.ConsolaScreen;
 import com.ashbisoficial.stagelite.client.screen.FocoScreen;
+import com.ashbisoficial.stagelite.client.screen.MovingHeadScreen;
 import com.ashbisoficial.stagelite.registry.StageLiteBlockEntities;
 import com.ashbisoficial.stagelite.registry.StageLiteMenus;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -24,10 +27,14 @@ public class ClientSetup {
     public static void onClientSetup(FMLClientSetupEvent event) {
         MenuScreens.register(StageLiteMenus.FOCO.get(), FocoScreen::new);
         MenuScreens.register(StageLiteMenus.CONSOLA.get(), ConsolaScreen::new);
+        MenuScreens.register(StageLiteMenus.CABEZA_MOVIL.get(), MovingHeadScreen::new);
     }
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(StageLiteBlockEntities.FOCO.get(), FocoBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(StageLiteBlockEntities.ESTROBO.get(), FocoBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(StageLiteBlockEntities.PANEL.get(), WashBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(StageLiteBlockEntities.CABEZA_MOVIL.get(), MovingHeadBlockEntityRenderer::new);
     }
 }

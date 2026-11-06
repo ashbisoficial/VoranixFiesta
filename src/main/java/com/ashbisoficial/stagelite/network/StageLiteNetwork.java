@@ -4,6 +4,7 @@ import com.ashbisoficial.stagelite.StageLite;
 import com.ashbisoficial.stagelite.network.packet.ApplyGroupLookPacket;
 import com.ashbisoficial.stagelite.network.packet.BlackoutPacket;
 import com.ashbisoficial.stagelite.network.packet.SetFocoConfigPacket;
+import com.ashbisoficial.stagelite.network.packet.SetMovingHeadConfigPacket;
 import com.ashbisoficial.stagelite.network.packet.StrobeAllPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -50,6 +51,13 @@ public class StageLiteNetwork {
                 StrobeAllPacket::encode,
                 StrobeAllPacket::decode,
                 StrobeAllPacket::handle
+        );
+        CHANNEL.registerMessage(
+                nextId++,
+                SetMovingHeadConfigPacket.class,
+                SetMovingHeadConfigPacket::encode,
+                SetMovingHeadConfigPacket::decode,
+                SetMovingHeadConfigPacket::handle
         );
     }
 }

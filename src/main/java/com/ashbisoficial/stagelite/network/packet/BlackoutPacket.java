@@ -1,6 +1,6 @@
 package com.ashbisoficial.stagelite.network.packet;
 
-import com.ashbisoficial.stagelite.blockentity.FocoBlockEntity;
+import com.ashbisoficial.stagelite.blockentity.AbstractLightBlockEntity;
 import com.ashbisoficial.stagelite.light.GroupManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,14 +29,14 @@ public class BlackoutPacket {
             GroupManager groups = GroupManager.get(serverLevel);
             boolean anyOn = false;
             for (BlockPos pos : groups.getAllPositions()) {
-                if (serverLevel.getBlockEntity(pos) instanceof FocoBlockEntity foco && !foco.isBlackedOut()) {
+                if (serverLevel.getBlockEntity(pos) instanceof AbstractLightBlockEntity foco && !foco.isBlackedOut()) {
                     anyOn = true;
                     break;
                 }
             }
             boolean newBlackout = anyOn;
             for (BlockPos pos : groups.getAllPositions()) {
-                if (serverLevel.getBlockEntity(pos) instanceof FocoBlockEntity foco) {
+                if (serverLevel.getBlockEntity(pos) instanceof AbstractLightBlockEntity foco) {
                     foco.setBlackedOut(newBlackout);
                 }
             }

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "particle": "stagelite:block/cabeza_movil_side",
+    "top": "stagelite:block/cabeza_movil_top",
+    "front": "stagelite:block/cabeza_movil_front",
+    "side": "stagelite:block/cabeza_movil_side"
+  }
+}

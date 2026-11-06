@@ -1,6 +1,6 @@
 package com.ashbisoficial.stagelite.network.packet;
 
-import com.ashbisoficial.stagelite.blockentity.FocoBlockEntity;
+import com.ashbisoficial.stagelite.blockentity.AbstractLightBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
@@ -53,7 +53,7 @@ public class SetFocoConfigPacket {
                 return;
             }
             BlockEntity blockEntity = level.getBlockEntity(packet.pos);
-            if (blockEntity instanceof FocoBlockEntity foco) {
+            if (blockEntity instanceof AbstractLightBlockEntity foco) {
                 foco.applyConfigFromClient(packet.color, packet.intensity, packet.group);
             }
         });

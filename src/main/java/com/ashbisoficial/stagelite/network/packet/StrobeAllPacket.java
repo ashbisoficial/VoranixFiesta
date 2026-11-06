@@ -1,6 +1,6 @@
 package com.ashbisoficial.stagelite.network.packet;
 
-import com.ashbisoficial.stagelite.blockentity.FocoBlockEntity;
+import com.ashbisoficial.stagelite.blockentity.AbstractLightBlockEntity;
 import com.ashbisoficial.stagelite.light.Effects;
 import com.ashbisoficial.stagelite.light.GroupManager;
 import net.minecraft.core.BlockPos;
@@ -32,12 +32,14 @@ public class StrobeAllPacket {
             }
             GroupManager groups = GroupManager.get(serverLevel);
             for (BlockPos pos : groups.getAllPositions()) {
-                if (serverLevel.getBlockEntity(pos) instanceof FocoBlockEntity foco) {
+                if (serverLevel.getBlockEntity(pos) instanceof AbstractLightBlockEntity foco) {
                     foco.applyGroupLook(
                             foco.getLightState().getColor(),
                             foco.getLightState().getIntensity(),
                             Effects.PARPADEO,
-                            1.0f
+                            1.0f,
+                            0,
+                            1
                     );
                 }
             }

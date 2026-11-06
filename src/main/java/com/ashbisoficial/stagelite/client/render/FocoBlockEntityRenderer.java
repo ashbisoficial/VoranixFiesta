@@ -1,10 +1,9 @@
 package com.ashbisoficial.stagelite.client.render;
 
-import com.ashbisoficial.stagelite.block.FocoBlock;
-import com.ashbisoficial.stagelite.blockentity.FocoBlockEntity;
+import com.ashbisoficial.stagelite.block.AbstractLightBlock;
+import com.ashbisoficial.stagelite.blockentity.AbstractLightBlockEntity;
 import com.ashbisoficial.stagelite.light.Effects;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -18,8 +17,11 @@ import net.minecraft.world.level.block.state.BlockState;
  * (BeaconRenderer.renderBeaconBeam), solo que orientado hacia la cara del foco en vez de
  * siempre hacia arriba. La Etapa C (recortar el haz contra bloques solidos) queda para mas
  * adelante.
+ *
+ * Lo usan tanto el Foco como el Estroboscopio (Fase 3): a este ultimo solo le cambia el
+ * efecto por defecto (parpadeo), no la forma en que se dibuja.
  */
-public class FocoBlockEntityRenderer implements BlockEntityRenderer<FocoBlockEntity> {
+public class FocoBlockEntityRenderer implements BlockEntityRenderer<AbstractLightBlockEntity> {
 
     private static final int BEAM_LENGTH = 10;
 
@@ -27,21 +29,22 @@ public class FocoBlockEntityRenderer implements BlockEntityRenderer<FocoBlockEnt
     }
 
     @Override
-    public void render(FocoBlockEntity foco, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void render(AbstractLightBlockEntity foco, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         if (!foco.isOn()) {
             return;
         }
 
         BlockState state = foco.getBlockState();
-        Direction facing = state.getValue(FocoBlock.FACING);
-        int color = foco.getLightState().getColor();
-        float[] colorComponents = new float[]{
-                ((color >> 16) & 0xFF) / 255.0f,
-                ((color >> 8) & 0xFF) / 255.0f,
-                (color & 0xFF) / 255.0f
-        };
+        Direction facing = state.getValue(AbstractLightBlock.FACING);
+        String effect = foco.getLightState().getEffect();
+        int groupIndex = foco.getGroupIndex();
+        int groupSize = foco.getGroupSize();
         long gameTime = foco.getLevel() != null ? foco.getLevel().getGameTime() : 0L;
-        float effectMultiplier = Effects.multiplier(foco.getLightState().getEffect(), foco.getLightState().getSpeed(), gameTime, partialTick);
+
+        int color = Effects.colorOverride(effect, foco.getLightState().getColor(), gameTime, partialTick, foco.getLightState().getSpeed(), groupIndex, groupSize);
+        float[] colorComponents = BeamRenderUtil.toRgb(color);
+
+        float effectMultiplier = Effects.multiplier(effect, foco.getLightState().getSpeed(), gameTime, partialTick, groupIndex, groupSize);
         float alpha = Math.max(0.0f, (foco.getEffectiveIntensity() / 100.0f) * effectMultiplier);
         if (alpha <= 0.01f) {
             return;
@@ -50,7 +53,7 @@ public class FocoBlockEntityRenderer implements BlockEntityRenderer<FocoBlockEnt
 
         poseStack.pushPose();
         poseStack.translate(0.5, 0.5, 0.5);
-        rotateToFacing(poseStack, facing);
+        BeamRenderUtil.rotateToFacing(poseStack, facing);
         poseStack.translate(0.0, -0.5, 0.0);
 
         BeaconRenderer.renderBeaconBeam(
@@ -68,18 +71,5 @@ public class FocoBlockEntityRenderer implements BlockEntityRenderer<FocoBlockEnt
         );
 
         poseStack.popPose();
-    }
-
-    /** Rota el eje local +Y (direccion del haz del faro) hacia la cara en la que mira el foco. */
-    private static void rotateToFacing(PoseStack poseStack, Direction facing) {
-        switch (facing) {
-            case UP -> {
-            }
-            case DOWN -> poseStack.mulPose(Axis.XP.rotationDegrees(180));
-            case NORTH -> poseStack.mulPose(Axis.XP.rotationDegrees(-90));
-            case SOUTH -> poseStack.mulPose(Axis.XP.rotationDegrees(90));
-            case EAST -> poseStack.mulPose(Axis.ZP.rotationDegrees(-90));
-            case WEST -> poseStack.mulPose(Axis.ZP.rotationDegrees(90));
-        }
     }
 }

@@ -1,6 +1,6 @@
 package com.ashbisoficial.stagelite.client.screen;
 
-import com.ashbisoficial.stagelite.blockentity.FocoBlockEntity;
+import com.ashbisoficial.stagelite.blockentity.AbstractLightBlockEntity;
 import com.ashbisoficial.stagelite.menu.FocoMenu;
 import com.ashbisoficial.stagelite.network.StageLiteNetwork;
 import com.ashbisoficial.stagelite.network.packet.SetFocoConfigPacket;
@@ -35,7 +35,7 @@ public class FocoScreen extends AbstractContainerScreen<FocoMenu> {
         super(menu, inventory, title);
         this.imageWidth = 216;
         this.imageHeight = 196;
-        FocoBlockEntity blockEntity = getFocoBlockEntity();
+        AbstractLightBlockEntity blockEntity = getFocoBlockEntity();
         if (blockEntity != null) {
             this.selectedColor = blockEntity.getLightState().getColor();
             this.selectedIntensity = blockEntity.getLightState().getIntensity();
@@ -45,11 +45,11 @@ public class FocoScreen extends AbstractContainerScreen<FocoMenu> {
         }
     }
 
-    private FocoBlockEntity getFocoBlockEntity() {
+    private AbstractLightBlockEntity getFocoBlockEntity() {
         if (Minecraft.getInstance().level == null) {
             return null;
         }
-        if (Minecraft.getInstance().level.getBlockEntity(menu.getPos()) instanceof FocoBlockEntity foco) {
+        if (Minecraft.getInstance().level.getBlockEntity(menu.getPos()) instanceof AbstractLightBlockEntity foco) {
             return foco;
         }
         return null;

@@ -38,3 +38,18 @@ Lista de comprobaciones manuales que no se pueden automatizar fácilmente con JU
   - [ ] Pulsar "Estrobo general": todos los focos conocidos parpadean, conservando su color/intensidad.
   - [ ] **En servidor dedicado con dos jugadores:** un jugador aplica un cambio desde la consola; el otro, ya colocado mirando los focos, debe ver el cambio sin reconectarse.
   - [ ] Romper un foco del grupo y comprobar (con otro comando o reabriendo la consola) que ya no aparece afectado por "Aplicar a grupo" (se dio de baja correctamente).
+
+## Fase 3 — Más focos y efectos
+
+- [x] `./gradlew build` sin errores.
+- [x] `./gradlew runServer` carga los 4 bloques nuevos (panel, estrobo, cabeza_movil, truss), sus items, block entities, menús y el paquete de red de la cabeza móvil, sin errores.
+- [ ] **Pendiente de probar con cliente real (necesita pantalla):**
+  - [ ] Panel LED: craftear, colocar, dar redstone y comprobar que brilla como un resplandor de area (no como un cono como el foco).
+  - [ ] Estroboscopio: craftear, colocar, dar redstone y comprobar que parpadea solo, sin tener que elegir el efecto manualmente.
+  - [ ] Cabeza móvil: craftear, colocar, dar redstone, abrir su pantalla y probar los 3 patrones (Fijo = quieto, Barrido = va de lado a lado, Círculo = combinado) — el haz debe moverse solo sin que el bloque cambie de forma.
+  - [ ] Truss: craftear (da 4), colocar varios en línea (no se conectan visualmente todavía, es la limitación conocida) y colgar un foco apuntando hacia abajo desde su cara inferior.
+  - [ ] Agrupar 5-10 focos de distinto tipo (foco + panel + estrobo + cabeza móvil) en un mismo grupo y, desde la consola, probar:
+    - [ ] Efecto Arcoíris: cada uno debe mostrar un color distinto que rota con el tiempo.
+    - [ ] Efecto Persecución: deben encenderse uno a uno, en orden, en bucle.
+    - [ ] El deslizador de Velocidad de la consola debe acelerar/ralentizar Parpadeo, Respiración, Arcoíris y Persecución.
+  - [ ] Comprobar que un foco roto y vuelto a colocar en el mismo grupo recibe un `groupIndex` nuevo correcto (no debe quedarse con el del foco anterior).

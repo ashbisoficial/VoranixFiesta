@@ -2,6 +2,17 @@
 
 Formato libre, orden cronológico inverso (lo más reciente arriba).
 
+## Fase 3 — Más focos y efectos
+
+- **Refactor**: se extrajo `AbstractLightBlockEntity` y `AbstractLightBlock` con la lógica común a todos los "focos" (LightState, redstone, blackout, grupo, sincronización, apertura de pantalla). Foco, Panel LED y Estroboscopio ya no duplican código entre sí; solo cambian su renderer.
+- **Panel LED** (`panel`): igual que el foco (misma pantalla, mismo paquete de red), pero sin haz marcado — en vez de un cono dibuja un resplandor corto y ancho reutilizando el mismo método de vanilla. Simplificación deliberada: no es un quad propio, ver nota en `WashBlockEntityRenderer`.
+- **Estroboscopio** (`estrobo`): igual que el foco, pero empieza con el efecto "parpadeo" activado por defecto.
+- **Efectos de grupo con BPM**: arcoíris (cada foco del grupo gira de color, desfasado por su posición) y persecución (se encienden uno a uno siguiendo el orden del grupo). Ambos necesitan saber la posición del foco dentro de su grupo (`groupIndex`/`groupSize`), que la consola asigna al aplicar un look y que persiste en NBT. Un deslizador de velocidad en la consola controla el BPM de Parpadeo/Respiración/Arcoíris/Persecución.
+- **Cabeza móvil** (`cabeza_movil`): como el foco, con un selector de patrón (Fijo/Barrido/Círculo) en su propia pantalla. Simplificación deliberada: el modelo del bloque no tiene partes que giren; lo que se mueve es la dirección del haz (dos rotaciones extra sobre el haz, deterministas por `gameTime`, igual que los demás efectos). Apuntar a una coordenada fija concreta queda fuera de alcance.
+- **Truss** (`truss`): bloque metálico simple para la estructura. Simplificación deliberada: todavía no se conecta visualmente a los trusses vecinos (sin texturas conectadas tipo rejas de hierro) — es trabajo de arte, no de lógica, y queda para una pasada de pulido posterior. Colgar un foco debajo ya funciona solo: basta con orientarlo hacia abajo contra la cara inferior de cualquier bloque sólido, truss incluido.
+- Recetas, loot tables, texturas placeholder y traducciones de los 4 bloques nuevos.
+- Verificado en esta sesión: `./gradlew build` y `./gradlew runServer` sin errores.
+
 ## Fase 2 — Grupos y consola
 
 - `GroupManager` (`SavedData`, persistente por dimensión): índice de qué focos pertenecen a qué grupo. No guarda el "look" del grupo, solo las posiciones — cada foco sigue siendo dueño de su propio `LightState`.

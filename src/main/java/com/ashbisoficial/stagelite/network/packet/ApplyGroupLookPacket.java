@@ -1,6 +1,6 @@
 package com.ashbisoficial.stagelite.network.packet;
 
-import com.ashbisoficial.stagelite.blockentity.FocoBlockEntity;
+import com.ashbisoficial.stagelite.blockentity.AbstractLightBlockEntity;
 import com.ashbisoficial.stagelite.light.GroupManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -55,10 +55,14 @@ public class ApplyGroupLookPacket {
                 return;
             }
             GroupManager groups = GroupManager.get(serverLevel);
-            for (BlockPos pos : groups.getPositions(packet.group)) {
-                if (serverLevel.getBlockEntity(pos) instanceof FocoBlockEntity foco) {
-                    foco.applyGroupLook(packet.color, packet.intensity, packet.effect, packet.speed);
+            var positions = groups.getPositions(packet.group);
+            int size = positions.size();
+            int index = 0;
+            for (BlockPos pos : positions) {
+                if (serverLevel.getBlockEntity(pos) instanceof AbstractLightBlockEntity foco) {
+                    foco.applyGroupLook(packet.color, packet.intensity, packet.effect, packet.speed, index, size);
                 }
+                index++;
             }
         });
         context.setPacketHandled(true);

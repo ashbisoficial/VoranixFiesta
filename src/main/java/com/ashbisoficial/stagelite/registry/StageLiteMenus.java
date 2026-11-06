@@ -3,6 +3,7 @@ package com.ashbisoficial.stagelite.registry;
 import com.ashbisoficial.stagelite.StageLite;
 import com.ashbisoficial.stagelite.menu.ConsolaMenu;
 import com.ashbisoficial.stagelite.menu.FocoMenu;
+import com.ashbisoficial.stagelite.menu.MovingHeadMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -33,5 +34,10 @@ public class StageLiteMenus {
                 }
                 return new ConsolaMenu(windowId, inventory, pos, groups);
             })
+    );
+
+    public static final RegistryObject<MenuType<MovingHeadMenu>> CABEZA_MOVIL = MENUS.register(
+            "cabeza_movil",
+            () -> IForgeMenuType.create((windowId, inventory, data) -> new MovingHeadMenu(windowId, inventory, data.readBlockPos()))
     );
 }

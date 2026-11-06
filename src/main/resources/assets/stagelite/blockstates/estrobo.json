@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "facing=north,lit=false": { "model": "stagelite:block/estrobo" },
+    "facing=south,lit=false": { "model": "stagelite:block/estrobo", "y": 180 },
+    "facing=west,lit=false": { "model": "stagelite:block/estrobo", "y": 270 },
+    "facing=east,lit=false": { "model": "stagelite:block/estrobo", "y": 90 },
+    "facing=up,lit=false": { "model": "stagelite:block/estrobo", "x": 270 },
+    "facing=down,lit=false": { "model": "stagelite:block/estrobo", "x": 90 },
+
+    "facing=north,lit=true": { "model": "stagelite:block/estrobo_lit" },
+    "facing=south,lit=true": { "model": "stagelite:block/estrobo_lit", "y": 180 },
+    "facing=west,lit=true": { "model": "stagelite:block/estrobo_lit", "y": 270 },
+    "facing=east,lit=true": { "model": "stagelite:block/estrobo_lit", "y": 90 },
+    "facing=up,lit=true": { "model": "stagelite:block/estrobo_lit", "x": 270 },
+    "facing=down,lit=true": { "model": "stagelite:block/estrobo_lit", "x": 90 }
+  }
+}
