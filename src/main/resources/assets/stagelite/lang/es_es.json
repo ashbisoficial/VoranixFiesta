@@ -2,9 +2,24 @@
   "itemGroup.stagelite": "StageLite",
   "block.stagelite.foco": "Foco",
   "container.stagelite.foco": "Foco",
+  "block.stagelite.consola": "Consola de luces",
+  "container.stagelite.consola": "Consola de luces",
 
   "gui.stagelite.save": "Guardar",
   "gui.stagelite.cancel": "Cancelar",
+
+  "gui.stagelite.effect.fijo": "Fijo",
+  "gui.stagelite.effect.parpadeo": "Parpadeo",
+  "gui.stagelite.effect.respiracion": "Respiracion",
+
+  "gui.stagelite.consola.group.tooltip": "Aplica los cambios a todos los focos de este grupo.",
+  "gui.stagelite.consola.apply": "Aplicar a grupo",
+  "gui.stagelite.consola.apply.tooltip": "Cambia el color, la intensidad y el efecto de todos los focos del grupo elegido.",
+  "gui.stagelite.consola.blackout": "Blackout",
+  "gui.stagelite.consola.blackout.tooltip": "Apaga (o vuelve a encender) todos los focos conocidos, sin tocar su configuracion.",
+  "gui.stagelite.consola.strobe": "Estrobo general",
+  "gui.stagelite.consola.strobe.tooltip": "Pone parpadeo en todos los focos conocidos, con su color e intensidad actuales.",
+  "gui.stagelite.consola.no_groups": "Todavia no hay grupos: ponle un nombre de grupo a un foco desde su pantalla.",
 
   "gui.stagelite.foco.intensity": "Intensidad: %s%%",
   "gui.stagelite.foco.intensity.tooltip": "Lo brillante que se ve el foco cuando tiene corriente.",

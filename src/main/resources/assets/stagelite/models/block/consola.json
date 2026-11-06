@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "particle": "stagelite:block/consola_side",
+    "top": "stagelite:block/consola_top",
+    "front": "stagelite:block/consola_front",
+    "side": "stagelite:block/consola_side"
+  }
+}

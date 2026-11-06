@@ -2,6 +2,21 @@
 
 Formato libre, orden cronológico inverso (lo más reciente arriba).
 
+## Fase 2 — Grupos y consola
+
+- `GroupManager` (`SavedData`, persistente por dimensión): índice de qué focos pertenecen a qué grupo. No guarda el "look" del grupo, solo las posiciones — cada foco sigue siendo dueño de su propio `LightState`.
+- El foco se registra/da de baja del grupo automáticamente al cambiar el nombre de grupo desde su pantalla (Fase 1), y al romperse (`FocoBlock.onRemove`).
+- Bloque **Consola de luces** (4 direcciones horizontales) con su propia pantalla: lista los grupos existentes (botones), paleta de color, intensidad, selector de efecto (Fijo/Parpadeo/Respiración) y un botón "Aplicar a grupo" que cambia de golpe el look de todos los focos de ese grupo.
+- Acciones rápidas de la consola: **Blackout** (alterna apagado de todos los focos conocidos, sin tocar su configuración ni la redstone) y **Estrobo general** (pone parpadeo en todos, conservando su color/intensidad).
+- Efectos básicos (`light/Effects.java`): parpadeo y respiración, deterministas por `gameTime` — el cliente los anima sin recibir un paquete por tick; no afectan al nivel de luz real del bloque (solo al haz), para no forzar actualizaciones de blockstate innecesarias.
+- Tres paquetes de red nuevos (`ApplyGroupLookPacket`, `BlackoutPacket`, `StrobeAllPacket`), todos resueltos en el hilo principal del servidor.
+- Receta, loot table, texturas placeholder y traducciones de la consola.
+- Verificado en esta sesión: `./gradlew build` y `./gradlew runServer` sin errores (bloques/items/block entities/menús/red cargan limpio).
+
+**Simplificación deliberada:** "Blackout" necesitaba apagar un foco aunque tenga redstone (un apagón de verdad no depende del cableado), así que se añadió un override `blackedOut` en `FocoBlockEntity` independiente de la redstone, en vez de forzar la señal. Se persiste en NBT para que sobreviva a un reinicio del servidor.
+
+**Pendiente de probar con cliente real** (no se pudo aquí, sin pantalla): el criterio de aceptación completo de la Fase 2 — diez focos en un mismo grupo, cambiando de color a la vez desde la consola, en servidor dedicado con dos jugadores. Ver `docs/TESTING.md`.
+
 ## Fase 1 — Foco simple con redstone
 
 - `LightState` (color, intensidad 0-100, grupo; angulo/efecto/velocidad reservados para fases posteriores).

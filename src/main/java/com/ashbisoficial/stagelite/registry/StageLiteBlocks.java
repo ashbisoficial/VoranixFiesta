@@ -1,6 +1,7 @@
 package com.ashbisoficial.stagelite.registry;
 
 import com.ashbisoficial.stagelite.StageLite;
+import com.ashbisoficial.stagelite.block.ConsolaBlock;
 import com.ashbisoficial.stagelite.block.FocoBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -21,6 +22,15 @@ public class StageLiteBlocks {
                     .strength(2.0f, 6.0f)
                     .sound(SoundType.METAL)
                     .noOcclusion()
+            )
+    );
+
+    public static final RegistryObject<Block> CONSOLA = BLOCKS.register(
+            "consola",
+            () -> new ConsolaBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_GRAY)
+                    .strength(3.5f, 6.0f)
+                    .sound(SoundType.METAL)
             )
     );
 }

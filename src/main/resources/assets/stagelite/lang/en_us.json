@@ -2,9 +2,24 @@
   "itemGroup.stagelite": "StageLite",
   "block.stagelite.foco": "Spotlight",
   "container.stagelite.foco": "Spotlight",
+  "block.stagelite.consola": "Light console",
+  "container.stagelite.consola": "Light console",
 
   "gui.stagelite.save": "Save",
   "gui.stagelite.cancel": "Cancel",
+
+  "gui.stagelite.effect.fijo": "Static",
+  "gui.stagelite.effect.parpadeo": "Blink",
+  "gui.stagelite.effect.respiracion": "Breathe",
+
+  "gui.stagelite.consola.group.tooltip": "Apply the changes to every spotlight in this group.",
+  "gui.stagelite.consola.apply": "Apply to group",
+  "gui.stagelite.consola.apply.tooltip": "Changes the color, intensity and effect of every spotlight in the chosen group.",
+  "gui.stagelite.consola.blackout": "Blackout",
+  "gui.stagelite.consola.blackout.tooltip": "Turns every known spotlight off (or back on), without touching its configuration.",
+  "gui.stagelite.consola.strobe": "Strobe all",
+  "gui.stagelite.consola.strobe.tooltip": "Sets blink on every known spotlight, keeping its current color and intensity.",
+  "gui.stagelite.consola.no_groups": "No groups yet: give a spotlight a group name from its own screen.",
 
   "gui.stagelite.foco.intensity": "Intensity: %s%%",
   "gui.stagelite.foco.intensity.tooltip": "How bright the spotlight looks once it has power.",

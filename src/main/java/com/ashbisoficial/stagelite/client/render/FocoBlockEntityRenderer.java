@@ -2,6 +2,7 @@ package com.ashbisoficial.stagelite.client.render;
 
 import com.ashbisoficial.stagelite.block.FocoBlock;
 import com.ashbisoficial.stagelite.blockentity.FocoBlockEntity;
+import com.ashbisoficial.stagelite.light.Effects;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -39,9 +40,13 @@ public class FocoBlockEntityRenderer implements BlockEntityRenderer<FocoBlockEnt
                 ((color >> 8) & 0xFF) / 255.0f,
                 (color & 0xFF) / 255.0f
         };
-        float alpha = Math.max(0.15f, foco.getEffectiveIntensity() / 100.0f);
-
         long gameTime = foco.getLevel() != null ? foco.getLevel().getGameTime() : 0L;
+        float effectMultiplier = Effects.multiplier(foco.getLightState().getEffect(), foco.getLightState().getSpeed(), gameTime, partialTick);
+        float alpha = Math.max(0.0f, (foco.getEffectiveIntensity() / 100.0f) * effectMultiplier);
+        if (alpha <= 0.01f) {
+            return;
+        }
+        alpha = Math.max(0.15f, alpha);
 
         poseStack.pushPose();
         poseStack.translate(0.5, 0.5, 0.5);

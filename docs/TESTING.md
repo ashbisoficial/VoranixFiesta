@@ -23,3 +23,18 @@ Lista de comprobaciones manuales que no se pueden automatizar fácilmente con JU
   - [ ] Cambiar el color/intensidad/grupo y pulsar "Guardar": el cambio debe verse en el bloque sin tener que volver a entrar al chunk.
   - [ ] Romper el foco: debe soltar el item (loot table).
   - [ ] Probar en servidor dedicado con dos jugadores (uno coloca/configura, el otro debe ver el mismo resultado).
+
+## Fase 2 — Grupos y consola
+
+- [x] `./gradlew build` sin errores.
+- [x] `./gradlew runServer` carga el bloque/item/block entity/menú de la consola y los paquetes de red sin errores.
+- [ ] **Pendiente de probar con cliente real (necesita pantalla) — criterio de aceptación de la Fase 2:**
+  - [ ] Colocar 10 focos, darles redstone y ponerles a todos el mismo nombre de grupo (p. ej. "Escenario") desde su pantalla individual.
+  - [ ] Craftear y colocar una consola (hierro + redstone + antorcha de redstone).
+  - [ ] Abrir la consola: el grupo "Escenario" debe aparecer como botón.
+  - [ ] Elegir el grupo, un color y una intensidad, pulsar "Aplicar a grupo": los 10 focos deben cambiar de color a la vez.
+  - [ ] Probar los tres efectos (Fijo/Parpadeo/Respiración) aplicados a un grupo.
+  - [ ] Pulsar "Blackout": todos los focos conocidos se apagan (aunque tengan redstone); pulsarlo otra vez los vuelve a encender con su configuración previa.
+  - [ ] Pulsar "Estrobo general": todos los focos conocidos parpadean, conservando su color/intensidad.
+  - [ ] **En servidor dedicado con dos jugadores:** un jugador aplica un cambio desde la consola; el otro, ya colocado mirando los focos, debe ver el cambio sin reconectarse.
+  - [ ] Romper un foco del grupo y comprobar (con otro comando o reabriendo la consola) que ya no aparece afectado por "Aplicar a grupo" (se dio de baja correctamente).

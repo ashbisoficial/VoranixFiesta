@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "stagelite:block/consola" },
+    "facing=south": { "model": "stagelite:block/consola", "y": 180 },
+    "facing=west": { "model": "stagelite:block/consola", "y": 270 },
+    "facing=east": { "model": "stagelite:block/consola", "y": 90 }
+  }
+}

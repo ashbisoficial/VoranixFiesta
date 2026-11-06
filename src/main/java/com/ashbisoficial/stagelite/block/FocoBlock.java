@@ -78,4 +78,13 @@ public class FocoBlock extends BaseEntityBlock {
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!level.isClientSide && state.getBlock() != newState.getBlock()
+                && level.getBlockEntity(pos) instanceof FocoBlockEntity foco) {
+            foco.unregisterFromGroup();
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
 }

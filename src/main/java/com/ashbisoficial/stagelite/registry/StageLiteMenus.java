@@ -1,12 +1,16 @@
 package com.ashbisoficial.stagelite.registry;
 
 import com.ashbisoficial.stagelite.StageLite;
+import com.ashbisoficial.stagelite.menu.ConsolaMenu;
 import com.ashbisoficial.stagelite.menu.FocoMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StageLiteMenus {
 
@@ -16,5 +20,18 @@ public class StageLiteMenus {
     public static final RegistryObject<MenuType<FocoMenu>> FOCO = MENUS.register(
             "foco",
             () -> IForgeMenuType.create((windowId, inventory, data) -> new FocoMenu(windowId, inventory, data.readBlockPos()))
+    );
+
+    public static final RegistryObject<MenuType<ConsolaMenu>> CONSOLA = MENUS.register(
+            "consola",
+            () -> IForgeMenuType.create((windowId, inventory, data) -> {
+                var pos = data.readBlockPos();
+                int count = data.readVarInt();
+                List<String> groups = new ArrayList<>(count);
+                for (int i = 0; i < count; i++) {
+                    groups.add(data.readUtf());
+                }
+                return new ConsolaMenu(windowId, inventory, pos, groups);
+            })
     );
 }

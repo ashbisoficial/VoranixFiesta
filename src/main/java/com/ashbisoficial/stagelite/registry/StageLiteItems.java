@@ -15,4 +15,9 @@ public class StageLiteItems {
             "foco",
             () -> new BlockItem(StageLiteBlocks.FOCO.get(), new Item.Properties())
     );
+
+    public static final RegistryObject<Item> CONSOLA = ITEMS.register(
+            "consola",
+            () -> new BlockItem(StageLiteBlocks.CONSOLA.get(), new Item.Properties())
+    );
 }

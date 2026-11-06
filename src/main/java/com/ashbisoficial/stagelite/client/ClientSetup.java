@@ -2,6 +2,7 @@ package com.ashbisoficial.stagelite.client;
 
 import com.ashbisoficial.stagelite.StageLite;
 import com.ashbisoficial.stagelite.client.render.FocoBlockEntityRenderer;
+import com.ashbisoficial.stagelite.client.screen.ConsolaScreen;
 import com.ashbisoficial.stagelite.client.screen.FocoScreen;
 import com.ashbisoficial.stagelite.registry.StageLiteBlockEntities;
 import com.ashbisoficial.stagelite.registry.StageLiteMenus;
@@ -22,6 +23,7 @@ public class ClientSetup {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         MenuScreens.register(StageLiteMenus.FOCO.get(), FocoScreen::new);
+        MenuScreens.register(StageLiteMenus.CONSOLA.get(), ConsolaScreen::new);
     }
 
     @SubscribeEvent
