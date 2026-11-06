@@ -1,0 +1,39 @@
+# gradle
+.gradle/
+build/
+out/
+classes/
+
+# eclipse
+bin/
+*.launch
+.settings/
+.metadata
+.classpath
+.project
+
+# idea
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+.vscode/
+
+# OS
+*.DS_Store
+Thumbs.db
+
+# runs de minecraft / forge
+run/
+run-server/
+run-data/
+logs/
+
+# datos generados por data generators (se regeneran con ./gradlew runData)
+src/generated/
+
+# credenciales que nunca deben subirse
+*.env
+local.properties
