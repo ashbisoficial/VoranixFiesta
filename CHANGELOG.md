@@ -2,6 +2,17 @@
 
 Formato libre, orden cronológico inverso (lo más reciente arriba).
 
+## Fase 4 — Escenas y shows
+
+- **Escenas** (`Scene`/`SceneManager`, persistente por dimensión): guarda el color/intensidad/efecto/velocidad de un grupo con un nombre, desde la nueva pestaña "Shows" de la consola. "Cargar escena" la vuelve a aplicar al instante.
+- **Shows** (`Show`/`ShowManager`): hasta 4 pasos fijos (escena + duración + transición Corte/Fundido), con opción de bucle. Simplificación deliberada: el editor es una lista fija de 4 filas en la propia consola (ciclar escena/duración con un clic, alternar Corte/Fundido), no un gestor dinámico de pasos ilimitados — así se evita un editor de listas completo dentro de una GUI de Minecraft.
+- **Fundido determinista**: en vez de que el servidor reenvíe el color cada tick durante una transición, cada foco guarda "desde dónde" y "desde cuándo" se está fundiendo (`fadeFromColor`, `fadeStartGameTime`, `fadeDurationTicks`) y el cliente interpola solo en el renderer a partir de `gameTime` — ningún tick ni paquete extra de red durante el fundido, coherente con el principio de "efectos deterministas por tiempo" del documento de arquitectura.
+- **Reproducción**: con el botón "Reproducir" de la consola, o con una señal de redstone entrante (flanco de subida) si ese show quedó "armado" (se arma automáticamente al reproducirlo una vez). La consola solo tiquea para avanzar de paso y para apagar su propio pulso de salida — nada que no esté reproduciendo nada tiquea.
+- **Salida de redstone**: la consola emite una señal de 15 durante medio segundo (10 ticks) cada vez que se activa una escena (al cargarla directamente o en cada paso de un show en marcha), y lo anuncia a sus vecinos con `updateNeighborsAt` tanto al empezar como al apagarse.
+- Verificado en esta sesión: `./gradlew build` y `./gradlew runServer` sin errores (bloque consola, ticker, paquetes de escena/show cargan limpio).
+
+**Simplificación deliberada**: cargar una escena existente para seguir editándola (ver sus pasos ya guardados) no está soportado todavía — el editor siempre parte de lo que haya en pantalla. Guardar un show con el mismo nombre lo sobrescribe, así que "editar" es "rehacer los 4 pasos y guardar con el mismo nombre".
+
 ## Fase 3 — Más focos y efectos
 
 - **Refactor**: se extrajo `AbstractLightBlockEntity` y `AbstractLightBlock` con la lógica común a todos los "focos" (LightState, redstone, blackout, grupo, sincronización, apertura de pantalla). Foco, Panel LED y Estroboscopio ya no duplican código entre sí; solo cambian su renderer.

@@ -38,11 +38,11 @@ public class MovingHeadBlockEntityRenderer implements BlockEntityRenderer<Moving
         int groupSize = cabeza.getGroupSize();
         long gameTime = cabeza.getLevel() != null ? cabeza.getLevel().getGameTime() : 0L;
 
-        int color = Effects.colorOverride(effect, cabeza.getLightState().getColor(), gameTime, partialTick, cabeza.getLightState().getSpeed(), groupIndex, groupSize);
+        int color = Effects.colorOverride(effect, cabeza.getDisplayColor(gameTime, partialTick), gameTime, partialTick, cabeza.getLightState().getSpeed(), groupIndex, groupSize);
         float[] colorComponents = BeamRenderUtil.toRgb(color);
 
         float effectMultiplier = Effects.multiplier(effect, cabeza.getLightState().getSpeed(), gameTime, partialTick, groupIndex, groupSize);
-        float alpha = Math.max(0.0f, (cabeza.getEffectiveIntensity() / 100.0f) * effectMultiplier);
+        float alpha = Math.max(0.0f, (cabeza.getEffectiveIntensity(gameTime, partialTick) / 100.0f) * effectMultiplier);
         if (alpha <= 0.01f) {
             return;
         }

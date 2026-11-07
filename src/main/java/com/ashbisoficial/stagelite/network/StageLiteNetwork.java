@@ -3,8 +3,13 @@ package com.ashbisoficial.stagelite.network;
 import com.ashbisoficial.stagelite.StageLite;
 import com.ashbisoficial.stagelite.network.packet.ApplyGroupLookPacket;
 import com.ashbisoficial.stagelite.network.packet.BlackoutPacket;
+import com.ashbisoficial.stagelite.network.packet.LoadScenePacket;
+import com.ashbisoficial.stagelite.network.packet.PlayShowPacket;
+import com.ashbisoficial.stagelite.network.packet.SaveScenePacket;
+import com.ashbisoficial.stagelite.network.packet.SaveShowPacket;
 import com.ashbisoficial.stagelite.network.packet.SetFocoConfigPacket;
 import com.ashbisoficial.stagelite.network.packet.SetMovingHeadConfigPacket;
+import com.ashbisoficial.stagelite.network.packet.StopShowPacket;
 import com.ashbisoficial.stagelite.network.packet.StrobeAllPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -58,6 +63,41 @@ public class StageLiteNetwork {
                 SetMovingHeadConfigPacket::encode,
                 SetMovingHeadConfigPacket::decode,
                 SetMovingHeadConfigPacket::handle
+        );
+        CHANNEL.registerMessage(
+                nextId++,
+                SaveScenePacket.class,
+                SaveScenePacket::encode,
+                SaveScenePacket::decode,
+                SaveScenePacket::handle
+        );
+        CHANNEL.registerMessage(
+                nextId++,
+                LoadScenePacket.class,
+                LoadScenePacket::encode,
+                LoadScenePacket::decode,
+                LoadScenePacket::handle
+        );
+        CHANNEL.registerMessage(
+                nextId++,
+                SaveShowPacket.class,
+                SaveShowPacket::encode,
+                SaveShowPacket::decode,
+                SaveShowPacket::handle
+        );
+        CHANNEL.registerMessage(
+                nextId++,
+                PlayShowPacket.class,
+                PlayShowPacket::encode,
+                PlayShowPacket::decode,
+                PlayShowPacket::handle
+        );
+        CHANNEL.registerMessage(
+                nextId++,
+                StopShowPacket.class,
+                StopShowPacket::encode,
+                StopShowPacket::decode,
+                StopShowPacket::handle
         );
     }
 }

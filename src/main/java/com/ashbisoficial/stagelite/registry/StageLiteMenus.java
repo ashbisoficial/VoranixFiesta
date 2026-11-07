@@ -27,12 +27,10 @@ public class StageLiteMenus {
             "consola",
             () -> IForgeMenuType.create((windowId, inventory, data) -> {
                 var pos = data.readBlockPos();
-                int count = data.readVarInt();
-                List<String> groups = new ArrayList<>(count);
-                for (int i = 0; i < count; i++) {
-                    groups.add(data.readUtf());
-                }
-                return new ConsolaMenu(windowId, inventory, pos, groups);
+                List<String> groups = readStringList(data);
+                List<String> scenes = readStringList(data);
+                List<String> shows = readStringList(data);
+                return new ConsolaMenu(windowId, inventory, pos, groups, scenes, shows);
             })
     );
 
@@ -40,4 +38,13 @@ public class StageLiteMenus {
             "cabeza_movil",
             () -> IForgeMenuType.create((windowId, inventory, data) -> new MovingHeadMenu(windowId, inventory, data.readBlockPos()))
     );
+
+    private static List<String> readStringList(net.minecraft.network.FriendlyByteBuf data) {
+        int count = data.readVarInt();
+        List<String> values = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            values.add(data.readUtf());
+        }
+        return values;
+    }
 }

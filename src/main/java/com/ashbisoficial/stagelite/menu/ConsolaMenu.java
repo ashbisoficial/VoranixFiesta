@@ -15,12 +15,16 @@ public class ConsolaMenu extends AbstractContainerMenu {
 
     private final BlockPos pos;
     private final List<String> groupNames;
+    private final List<String> sceneNames;
+    private final List<String> showNames;
     private final ContainerLevelAccess access;
 
-    public ConsolaMenu(int containerId, Inventory inventory, BlockPos pos, List<String> groupNames) {
+    public ConsolaMenu(int containerId, Inventory inventory, BlockPos pos, List<String> groupNames, List<String> sceneNames, List<String> showNames) {
         super(StageLiteMenus.CONSOLA.get(), containerId);
         this.pos = pos;
         this.groupNames = groupNames;
+        this.sceneNames = sceneNames;
+        this.showNames = showNames;
         this.access = ContainerLevelAccess.create(inventory.player.level(), pos);
     }
 
@@ -30,6 +34,14 @@ public class ConsolaMenu extends AbstractContainerMenu {
 
     public List<String> getGroupNames() {
         return groupNames;
+    }
+
+    public List<String> getSceneNames() {
+        return sceneNames;
+    }
+
+    public List<String> getShowNames() {
+        return showNames;
     }
 
     @Override

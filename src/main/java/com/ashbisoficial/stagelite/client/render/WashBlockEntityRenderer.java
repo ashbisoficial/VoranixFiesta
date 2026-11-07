@@ -39,11 +39,11 @@ public class WashBlockEntityRenderer implements BlockEntityRenderer<AbstractLigh
         int groupSize = panel.getGroupSize();
         long gameTime = panel.getLevel() != null ? panel.getLevel().getGameTime() : 0L;
 
-        int color = Effects.colorOverride(effect, panel.getLightState().getColor(), gameTime, partialTick, panel.getLightState().getSpeed(), groupIndex, groupSize);
+        int color = Effects.colorOverride(effect, panel.getDisplayColor(gameTime, partialTick), gameTime, partialTick, panel.getLightState().getSpeed(), groupIndex, groupSize);
         float[] colorComponents = BeamRenderUtil.toRgb(color);
 
         float effectMultiplier = Effects.multiplier(effect, panel.getLightState().getSpeed(), gameTime, partialTick, groupIndex, groupSize);
-        float alpha = Math.max(0.0f, (panel.getEffectiveIntensity() / 100.0f) * effectMultiplier);
+        float alpha = Math.max(0.0f, (panel.getEffectiveIntensity(gameTime, partialTick) / 100.0f) * effectMultiplier);
         if (alpha <= 0.01f) {
             return;
         }

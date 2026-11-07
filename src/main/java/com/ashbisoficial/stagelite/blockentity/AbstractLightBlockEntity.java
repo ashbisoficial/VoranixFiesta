@@ -32,6 +32,10 @@ public abstract class AbstractLightBlockEntity extends BlockEntity implements Me
     private boolean blackedOut = false;
     private int groupIndex = 0;
     private int groupSize = 1;
+    private int fadeFromColor = LightState.DEFAULT_COLOR;
+    private int fadeFromIntensity = LightState.DEFAULT_INTENSITY;
+    private long fadeStartGameTime = 0L;
+    private int fadeDurationTicks = 0;
 
     protected AbstractLightBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -45,13 +49,48 @@ public abstract class AbstractLightBlockEntity extends BlockEntity implements Me
         return redstonePower;
     }
 
-    /** Intensidad efectiva (0-100) tras aplicar la potencia de redstone (1-15). 0 si no hay senal. */
-    public int getEffectiveIntensity() {
+    /** Intensidad efectiva (0-100) tras aplicar la potencia de redstone (1-15) y el fundido en curso. 0 si no hay senal. */
+    public int getEffectiveIntensity(long gameTime, float partialTick) {
         if (redstonePower <= 0) {
             return 0;
         }
-        int scaled = Math.round(lightState.getIntensity() * (redstonePower / 15.0f));
+        int scaled = Math.round(getDisplayIntensity(gameTime, partialTick) * (redstonePower / 15.0f));
         return Math.max(1, scaled);
+    }
+
+    /** Color mostrado ahora mismo, interpolado si hay un fundido en curso (ver applyGroupLook). */
+    public int getDisplayColor(long gameTime, float partialTick) {
+        float t = fadeProgress(gameTime, partialTick);
+        if (t >= 1.0f) {
+            return lightState.getColor();
+        }
+        return lerpColor(fadeFromColor, lightState.getColor(), t);
+    }
+
+    /** Intensidad configurada (0-100) mostrada ahora mismo, interpolada si hay un fundido en curso. */
+    public int getDisplayIntensity(long gameTime, float partialTick) {
+        float t = fadeProgress(gameTime, partialTick);
+        if (t >= 1.0f) {
+            return lightState.getIntensity();
+        }
+        return Math.round(fadeFromIntensity + (lightState.getIntensity() - fadeFromIntensity) * t);
+    }
+
+    private float fadeProgress(long gameTime, float partialTick) {
+        if (fadeDurationTicks <= 0) {
+            return 1.0f;
+        }
+        float elapsed = (gameTime + partialTick) - fadeStartGameTime;
+        return Math.max(0.0f, Math.min(1.0f, elapsed / fadeDurationTicks));
+    }
+
+    private static int lerpColor(int from, int to, float t) {
+        int fr = (from >> 16) & 0xFF, fg = (from >> 8) & 0xFF, fb = from & 0xFF;
+        int tr = (to >> 16) & 0xFF, tg = (to >> 8) & 0xFF, tb = to & 0xFF;
+        int r = Math.round(fr + (tr - fr) * t);
+        int g = Math.round(fg + (tg - fg) * t);
+        int b = Math.round(fb + (tb - fb) * t);
+        return (r << 16) | (g << 8) | b;
     }
 
     public boolean isOn() {
@@ -120,6 +159,19 @@ public abstract class AbstractLightBlockEntity extends BlockEntity implements Me
      * de aplicar el cambio: arcoiris y persecucion los usan para desfasarse unos de otros.
      */
     public void applyGroupLook(int color, int intensity, String effect, float speed, int groupIndex, int groupSize) {
+        applyGroupLook(color, intensity, effect, speed, groupIndex, groupSize, 0);
+    }
+
+    /**
+     * Igual que applyGroupLook, pero con un fundido: en vez de cambiar de golpe, el color y
+     * la intensidad se interpolan desde los valores actuales durante fadeDurationTicks
+     * (lo usa el reproductor de shows de la consola). 0 = corte instantaneo.
+     */
+    public void applyGroupLook(int color, int intensity, String effect, float speed, int groupIndex, int groupSize, int fadeDurationTicks) {
+        this.fadeFromColor = getDisplayColor(level != null ? level.getGameTime() : 0L, 0f);
+        this.fadeFromIntensity = getDisplayIntensity(level != null ? level.getGameTime() : 0L, 0f);
+        this.fadeStartGameTime = level != null ? level.getGameTime() : 0L;
+        this.fadeDurationTicks = Math.max(0, fadeDurationTicks);
         lightState.setColor(color);
         lightState.setIntensity(intensity);
         lightState.setEffect(effect);
@@ -160,6 +212,10 @@ public abstract class AbstractLightBlockEntity extends BlockEntity implements Me
         tag.putBoolean("BlackedOut", blackedOut);
         tag.putInt("GroupIndex", groupIndex);
         tag.putInt("GroupSize", groupSize);
+        tag.putInt("FadeFromColor", fadeFromColor);
+        tag.putInt("FadeFromIntensity", fadeFromIntensity);
+        tag.putLong("FadeStartGameTime", fadeStartGameTime);
+        tag.putInt("FadeDurationTicks", fadeDurationTicks);
     }
 
     @Override
@@ -170,6 +226,10 @@ public abstract class AbstractLightBlockEntity extends BlockEntity implements Me
         blackedOut = tag.getBoolean("BlackedOut");
         groupIndex = tag.getInt("GroupIndex");
         groupSize = Math.max(1, tag.contains("GroupSize") ? tag.getInt("GroupSize") : 1);
+        fadeFromColor = tag.contains("FadeFromColor") ? tag.getInt("FadeFromColor") : lightState.getColor();
+        fadeFromIntensity = tag.contains("FadeFromIntensity") ? tag.getInt("FadeFromIntensity") : lightState.getIntensity();
+        fadeStartGameTime = tag.getLong("FadeStartGameTime");
+        fadeDurationTicks = tag.getInt("FadeDurationTicks");
     }
 
     @Override

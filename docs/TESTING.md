@@ -53,3 +53,20 @@ Lista de comprobaciones manuales que no se pueden automatizar fácilmente con JU
     - [ ] Efecto Persecución: deben encenderse uno a uno, en orden, en bucle.
     - [ ] El deslizador de Velocidad de la consola debe acelerar/ralentizar Parpadeo, Respiración, Arcoíris y Persecución.
   - [ ] Comprobar que un foco roto y vuelto a colocar en el mismo grupo recibe un `groupIndex` nuevo correcto (no debe quedarse con el del foco anterior).
+
+## Fase 4 — Escenas y shows
+
+- [x] `./gradlew build` sin errores.
+- [x] `./gradlew runServer` carga el ticker de la consola y los 5 paquetes nuevos (escena/show) sin errores ni excepciones.
+- [ ] **Pendiente de probar con cliente real (necesita pantalla):**
+  - [ ] Abrir la consola, pestaña "Shows": elegir un grupo en la pestaña "Grupos", volver a "Shows", ponerle nombre y pulsar "Guardar escena". Debe aparecer como botón.
+  - [ ] Pulsar el botón de la escena guardada ("Cargar escena"): el grupo debe cambiar al instante al color/intensidad guardados.
+  - [ ] Configurar los 4 pasos (ciclar escena/duración con clic, alternar Corte/Fundido), ponerle nombre al show y pulsar "Guardar show".
+  - [ ] Pulsar "Reproducir": el show debe recorrer sus pasos en el orden y duración configurados.
+    - [ ] Un paso en "Corte" debe cambiar de golpe; uno en "Fundido" debe transicionar suavemente durante toda su duración.
+    - [ ] Con "Bucle: Si", el show debe volver al primer paso no vacío al terminar; con "No", debe pararse.
+  - [ ] Pulsar "Parar" a mitad de la reproducción: debe detenerse donde esté.
+  - [ ] Conectar un comparador/palanca de redstone a la consola tras reproducir un show una vez (queda "armado"): una nueva señal debe volver a lanzar el mismo show sin tocar la pantalla.
+  - [ ] Conectar un cable de redstone a la salida de la consola (cualquier otra cara): debe pulsarse (nivel 15 un instante) cada vez que se activa una escena o avanza un paso del show.
+  - [ ] Probar con dos jugadores: uno reproduce un show desde la consola, el otro debe ver los focos del grupo cambiar sin reconectarse.
+  - [ ] Reiniciar el servidor con un show reproduciéndose y comprobar que, como mínimo, no revienta nada al recargar (retomar exactamente donde estaba es un extra, no está garantizado).

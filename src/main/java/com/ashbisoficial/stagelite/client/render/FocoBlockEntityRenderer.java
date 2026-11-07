@@ -41,11 +41,11 @@ public class FocoBlockEntityRenderer implements BlockEntityRenderer<AbstractLigh
         int groupSize = foco.getGroupSize();
         long gameTime = foco.getLevel() != null ? foco.getLevel().getGameTime() : 0L;
 
-        int color = Effects.colorOverride(effect, foco.getLightState().getColor(), gameTime, partialTick, foco.getLightState().getSpeed(), groupIndex, groupSize);
+        int color = Effects.colorOverride(effect, foco.getDisplayColor(gameTime, partialTick), gameTime, partialTick, foco.getLightState().getSpeed(), groupIndex, groupSize);
         float[] colorComponents = BeamRenderUtil.toRgb(color);
 
         float effectMultiplier = Effects.multiplier(effect, foco.getLightState().getSpeed(), gameTime, partialTick, groupIndex, groupSize);
-        float alpha = Math.max(0.0f, (foco.getEffectiveIntensity() / 100.0f) * effectMultiplier);
+        float alpha = Math.max(0.0f, (foco.getEffectiveIntensity(gameTime, partialTick) / 100.0f) * effectMultiplier);
         if (alpha <= 0.01f) {
             return;
         }
